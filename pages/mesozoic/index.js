@@ -6,18 +6,23 @@ export default function MesozoicArchive({ specimens }) {
   return (
     <>
       <Head>
-        <title>Mesozoic Archive | WorldArchive</title>
+        <title>DinoArchive | Digital Mesozoic Museum</title>
+        <meta name="description" content="Curated digital archive of dinosaurs and Mesozoic reptiles" />
       </Head>
 
       <div className="header">
         <div className="container header-content">
-          <img src="/logo.png" alt="DinoArchive" className="logo" />
-          <h1 className="header-title">DINOARCHIVE</h1>
+          <img src="/DinoArchive.png" alt="DinoArchive" className="header-logo" />
         </div>
       </div>
 
       <div className="container main-layout">
         <aside className="sidebar">
+          <div className="sidebar-brand">
+            <img src="/logo.png" alt="DinoArchive Seal" className="seal-logo" />
+            <span className="brand-text">DINOARCHIVE</span>
+          </div>
+          
           <div className="sidebar-section">
             <h3 className="sidebar-title">Infrastructure</h3>
             <Link href="/" className="sidebar-link">← Back to WorldArchive</Link>
@@ -49,7 +54,7 @@ export default function MesozoicArchive({ specimens }) {
             <button className="filter-btn">+ Filter</button>
           </div>
 
-          <h3 style={{ marginBottom: '1rem', color: '#94a3b8' }}>
+          <h3 className="records-count">
             Specimen Records ({specimens.length})
           </h3>
 
@@ -74,7 +79,7 @@ export default function MesozoicArchive({ specimens }) {
                   )}
                 </div>
                 <div className="specimen-info">
-                  <span className="specimen-name">{specimen.name}</span>
+                  <span className="specimen-name">{specimen.name || 'Unnamed'}</span>
                 </div>
               </Link>
             ))}
@@ -84,9 +89,10 @@ export default function MesozoicArchive({ specimens }) {
 
       <style jsx>{`
         .header {
-          background: #1a202c;
+          background: #ffffff;
           padding: 2rem 0;
-          border-bottom: 1px solid #2d3748;
+          border-bottom: 1px solid #e2e8f0;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
         .container {
@@ -97,77 +103,105 @@ export default function MesozoicArchive({ specimens }) {
         
         .header-content {
           display: flex;
-          flex-direction: column;
+          justify-content: center;
           align-items: center;
         }
         
-        .logo {
-          width: 100px;
-          height: auto;
-          margin-bottom: 0.5rem;
-        }
-        
-        .header-title {
-          font-size: 1.8rem;
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          color: #f7fafc;
-          margin: 0;
+        .header-logo {
+          height: 80px;
+          width: auto;
+          max-width: 400px;
+          object-fit: contain;
         }
         
         .main-layout {
           display: grid;
-          grid-template-columns: 280px 1fr;
-          gap: 3rem;
+          grid-template-columns: 260px 1fr;
+          gap: 2rem;
           padding: 2rem;
+          background: #f8fafc;
+          min-height: calc(100vh - 130px);
         }
         
         .sidebar {
-          background: #2d3748;
+          background: #ffffff;
           padding: 1.5rem;
-          border-radius: 8px;
+          border-radius: 12px;
           height: fit-content;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          border: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-brand {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .seal-logo {
+          width: 40px;
+          height: 40px;
+          object-fit: contain;
+          opacity: 0.9;
+        }
+        
+        .brand-text {
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: #1e293b;
         }
         
         .sidebar-section {
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-section:last-child {
+          margin-bottom: 0;
         }
         
         .sidebar-title {
-          font-size: 0.75rem;
+          font-size: 0.65rem;
           text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: #a0aec0;
-          margin-bottom: 1rem;
+          letter-spacing: 0.15em;
+          color: #64748b;
+          margin-bottom: 0.75rem;
+          font-weight: 600;
         }
         
         .sidebar-link {
           display: block;
-          color: #e2e8f0;
+          color: #475569;
           text-decoration: none;
-          padding: 0.5rem 0;
-          font-size: 0.9rem;
+          padding: 0.4rem 0;
+          font-size: 0.85rem;
+          transition: color 0.2s;
         }
         
         .sidebar-link:hover {
-          color: #63b3ed;
+          color: #1e5a8e;
         }
         
         .content {
-          padding: 1rem 0;
+          padding: 0;
         }
         
         .page-title {
           font-size: 1.5rem;
-          font-weight: 600;
+          font-weight: 700;
           margin-bottom: 0.5rem;
-          color: #f7fafc;
+          color: #0f172a;
+          letter-spacing: -0.02em;
         }
         
         .page-description {
-          color: #a0aec0;
-          margin-bottom: 2rem;
+          color: #64748b;
+          margin-bottom: 1.5rem;
           line-height: 1.6;
+          font-size: 0.9rem;
         }
         
         .filters {
@@ -178,44 +212,57 @@ export default function MesozoicArchive({ specimens }) {
         }
         
         .filter-btn {
-          background: #2d3748;
-          border: 1px solid #4a5568;
-          color: #e2e8f0;
-          padding: 0.5rem 1rem;
-          border-radius: 4px;
+          background: #ffffff;
+          border: 1px solid #d1d5db;
+          color: #374151;
+          padding: 0.4rem 0.8rem;
+          border-radius: 6px;
           cursor: pointer;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
+          transition: all 0.2s;
         }
         
         .filter-btn:hover {
-          background: #4a5568;
+          background: #f3f4f6;
+          border-color: #9ca3af;
+        }
+        
+        .records-count {
+          margin-bottom: 1rem;
+          color: #64748b;
+          font-size: 0.85rem;
+          font-weight: 500;
         }
         
         .specimen-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+          gap: 1.25rem;
         }
         
         .specimen-card {
-          background: #2d3748;
-          border-radius: 8px;
+          background: #ffffff;
+          border-radius: 10px;
           overflow: hidden;
           text-decoration: none;
-          transition: transform 0.2s;
+          transition: all 0.2s;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+          border: 1px solid #e2e8f0;
         }
         
         .specimen-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         
         .specimen-image-container {
           width: 100%;
-          height: 180px;
-          background: #1a202c;
+          height: 160px;
+          background: #f1f5f9;
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
         }
         
         .specimen-image {
@@ -225,26 +272,44 @@ export default function MesozoicArchive({ specimens }) {
         }
         
         .specimen-image-placeholder {
-          font-size: 3rem;
+          font-size: 2.5rem;
+          opacity: 0.4;
         }
         
         .specimen-info {
-          padding: 1rem;
+          padding: 0.875rem;
+          border-top: 1px solid #e2e8f0;
         }
         
         .specimen-name {
-          color: #f7fafc;
-          font-weight: 500;
-          font-size: 0.9rem;
+          color: #0f172a;
+          font-weight: 600;
+          font-size: 0.85rem;
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         
         @media (max-width: 768px) {
           .main-layout {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 1rem;
           }
           
           .sidebar {
             order: 2;
+          }
+          
+          .header-logo {
+            height: 60px;
+            max-width: 300px;
+          }
+          
+          .specimen-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
           }
         }
       `}</style>
