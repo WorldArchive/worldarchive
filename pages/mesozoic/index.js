@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
 import { getSpecimens } from '../../lib/notion'
 
 export default function MesozoicArchive({ specimens }) {
