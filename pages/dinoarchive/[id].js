@@ -32,7 +32,6 @@ export default function SpecimenPage({ specimen }) {
       </h1>
       
       <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '3rem' }}>
-        {/* Scientific Data Sheet */}
         <aside style={{ background: '#f8f9fa', padding: '1.5rem', borderRadius: '8px', height: 'fit-content' }}>
           <h2 style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
             Scientific Data Sheet
@@ -66,7 +65,6 @@ export default function SpecimenPage({ specimen }) {
           ))}
         </aside>
 
-        {/* Imagen */}
         <main>
           {specimen.imageUrl && (
             <div style={{ 
