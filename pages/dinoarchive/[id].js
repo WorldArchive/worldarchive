@@ -3,18 +3,38 @@ import Link from 'next/link'
 import { getSpecimens, getSpecimenById } from '../../lib/notion'
 
 export async function getStaticPaths() {
-  const specimens = await getSpecimens()
-  return {
-    paths: specimens.map(s => ({ params: { id: s.id } })),
-    fallback: 'blocking',
+  try {
+    const specimens = await getSpecimens()
+    
+    return {
+      paths: specimens.map(s => ({ params: { id: s.id } })),
+      fallback: 'blocking',
+    }
+  } catch (error) {
+    console.error('Error in getStaticPaths:', error.message)
+    
+    // Devolver paths vacío para no romper el build
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
   }
 }
 
 export async function getStaticProps({ params }) {
-  const specimen = await getSpecimenById(params.id)
-  return {
-    props: { specimen },
-    revalidate: 3600,
+  try {
+    const specimen = await getSpecimenById(params.id)
+    
+    return {
+      props: { specimen },
+      revalidate: 3600,
+    }
+  } catch (error) {
+    console.error('Error in getStaticProps ([id]):', error.message)
+    
+    return {
+      notFound: true, // Mostrar página 404 si no se encuentra
+    }
   }
 }
 
