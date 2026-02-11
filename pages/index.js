@@ -16,7 +16,7 @@ export default function Home() {
         </header>
 
         <main className="archives-grid">
-          <Link href="/mesozoic" className="archive-card">
+          <Link href="/dinoarchive/archive" className="archive-card">
             <div className="archive-icon">🦕</div>
             <h2>Mesozoic Archive</h2>
             <p>Dinosaurs and reptiles from the Age of Reptiles (252-66 Ma)</p>
