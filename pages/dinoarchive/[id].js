@@ -1,19 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getSpecimens, getSpecimenById } from '../../lib/notion'
+import { getDinosaurs, getDinosaurById } from '../../lib/opensea'
 
 export async function getStaticPaths() {
   try {
-    const specimens = await getSpecimens()
+    const dinosaurs = await getDinosaurs()
     
     return {
-      paths: specimens.map(s => ({ params: { id: s.id } })),
+      paths: dinosaurs.map(d => ({ params: { id: d.id } })),
       fallback: 'blocking',
     }
   } catch (error) {
     console.error('Error in getStaticPaths:', error.message)
-    
-    // Devolver paths vacío para no romper el build
     return {
       paths: [],
       fallback: 'blocking',
@@ -23,18 +21,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   try {
-    const specimen = await getSpecimenById(params.id)
+    const specimen = await getDinosaurById(params.id)
+    
+    if (!specimen) {
+      return { notFound: true }
+    }
     
     return {
       props: { specimen },
       revalidate: 3600,
     }
   } catch (error) {
-    console.error('Error in getStaticProps ([id]):', error.message)
-    
-    return {
-      notFound: true, // Mostrar página 404 si no se encuentra
-    }
+    console.error('Error in getStaticProps:', error.message)
+    return { notFound: true }
   }
 }
 
@@ -83,6 +82,25 @@ export default function SpecimenPage({ specimen }) {
               <span style={{ fontWeight: 500 }}>{val || '—'}</span>
             </div>
           ))}
+          
+          <a 
+            href={specimen.openseaUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              display: 'block', 
+              marginTop: '1rem', 
+              padding: '0.75rem',
+              background: '#1e5a8e',
+              color: 'white',
+              textAlign: 'center',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              fontSize: '0.85rem'
+            }}
+          >
+            View on OpenSea →
+          </a>
         </aside>
 
         <main>
@@ -97,10 +115,17 @@ export default function SpecimenPage({ specimen }) {
                 src={specimen.imageUrl} 
                 alt={specimen.name}
                 width={600}
-                height={400}
-                style={{ objectFit: 'contain', maxHeight: '400px' }}
+                height={600}
+                style={{ objectFit: 'contain', maxHeight: '600px', width: 'auto', height: 'auto' }}
                 unoptimized={true}
               />
+            </div>
+          )}
+          
+          {specimen.description && (
+            <div style={{ marginTop: '2rem', padding: '1.5rem', background: '#f8f9fa', borderRadius: '8px' }}>
+              <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Description</h3>
+              <p style={{ color: '#666', lineHeight: '1.6' }}>{specimen.description}</p>
             </div>
           )}
         </main>
