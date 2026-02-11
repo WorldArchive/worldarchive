@@ -3,11 +3,20 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
-  },
-  // Asegurar que las variables estén disponibles en build time
-  env: {
-    NOTION_TOKEN: process.env.NOTION_TOKEN,
-    NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.opensea.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.ipfs.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.arweave.net',
+      },
+    ],
   },
 }
 
